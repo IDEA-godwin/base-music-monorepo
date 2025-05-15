@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
 /**
  * @title FundingPool
  * @dev Contract for managing funding for artist projects
  */
-contract FundingPool {
+contract FundingPool is Ownable {
     struct Project {
         string name;
         string description;
@@ -44,6 +46,8 @@ contract FundingPool {
         uint256 amount
     );
     event ProjectCompleted(address indexed artist, uint256 indexed projectId);
+
+    constructor() Ownable(msg.sender) {}
 
     function addFunds(address _artist, uint256 _amount) external payable {
         require(

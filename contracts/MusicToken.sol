@@ -16,7 +16,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  * @title MusicToken
  * @dev ERC1155 token implementation for music tokenization
  */
-contract MusicToken is ERC1155Supply {
+contract MusicToken is ERC1155Supply, Ownable {
     using Counters for Counters.Counter;
     using Strings for uint256;
 
@@ -47,7 +47,9 @@ contract MusicToken is ERC1155Supply {
 
     event PriceUpdated(uint256 indexed tokenId, uint256 newPrice);
 
-    constructor(address _artistRegistryAddress) ERC1155("") {
+    constructor(
+        address _artistRegistryAddress
+    ) ERC1155("") Ownable(msg.sender) {
         artistRegistry = ArtistRegistry(_artistRegistryAddress);
     }
 

@@ -97,18 +97,21 @@ contract Marketplace is Ownable {
         // Calculate fee distribution
         uint256 totalPrice = price * _quantity;
         uint256 platformFee = (totalPrice * platformFeePercentage) / 100;
-        uint256 artistAmount = totalPrice - platformFee;
+
+        uint256 artistProceeds = totalPrice - platformFee;
+        uint256 royaltyPortion = (artistProceeds * royaltyPercentage) / 100;
+        uint256 fundingPortion = artistProceeds - royaltyPortion;
 
         // Transfer fees
         platformWallet.transfer(platformFee);
 
         // Distribute royalties and add to funding pool
-        royaltyDistribution.addRoyalty{value: artistAmount}(
+        royaltyDistribution.addRoyalty{value: royaltyPortion}(
             artistAddress,
             _tokenId,
-            artistAmount
+            royaltyPortion
         );
-        fundingPool.addFunds{value: 0}(artistAddress, artistAmount);
+        fundingPool.addFunds{value: fundingPortion}(artistAddress, fundingPortion);
 
         // Mint token to buyer
         musicToken.mintAdditional(_tokenId, _quantity);

@@ -2,12 +2,13 @@
 pragma solidity ^0.8.17;
 
 import {MusicToken} from "./MusicToken.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title AccessControl
  * @dev Contract for managing token holder access rights
  */
-contract AccessControl {
+contract AccessControl is Ownable {
     MusicToken public musicToken;
 
     struct AccessRule {
@@ -29,7 +30,7 @@ contract AccessControl {
     event AccessRuleUpdated(address indexed artist, bytes32 ruleId);
     event AccessRuleDeactivated(address indexed artist, bytes32 ruleId);
 
-    constructor(address _musicTokenAddress) {
+    constructor(address _musicTokenAddress) Ownable(msg.sender) {
         musicToken = MusicToken(_musicTokenAddress);
     }
 
