@@ -38,7 +38,7 @@ function Header() {
     <header>
       <nav className="navbar">
         <div className='logo-body'>
-          <h1 className="navbar-brand">Base Music</h1>
+          <h1 className="navbar-brand">BaseMusic</h1>
           <span className='sub-logo'>by YARDSTICKS</span>
         </div>
         <ul className="navbar-nav">
