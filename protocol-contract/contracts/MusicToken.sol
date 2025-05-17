@@ -72,7 +72,6 @@ contract MusicToken is ERC1155Supply, Ownable {
         );
 
         uint256 newTokenId = _tokenIds.current();
-        _tokenIds.increment();
 
         musicData[newTokenId] = MusicData({
             title: _title,
@@ -83,6 +82,8 @@ contract MusicToken is ERC1155Supply, Ownable {
             isExclusive: _isExclusive,
             maxSupply: _maxSupply
         });
+
+        _tokenIds.increment();
 
         if (_initialMint > 0) {
             _mint(msg.sender, newTokenId, _initialMint, "");
